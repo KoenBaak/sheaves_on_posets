@@ -3,7 +3,7 @@
 """
 
 # imports 
-from sage.structure.sage_object import SageObject
+from sage.structure.category_object import CategoryObject
 from sage.categories.homset import Hom
 from sage.matrix.special import identity_matrix
 from sage.matrix.special import block_matrix
@@ -12,6 +12,8 @@ from sage.homology.chain_complex import ChainComplex
 from sage.rings.integer_ring import ZZ
 from sage.combinat.posets.posets import Poset
 from sage.tensor.modules.finite_rank_free_module import FiniteRankFreeModule
+
+from .sheaf_homset import LocFreeSheafHomset
 
 #-------------------------------------------------------------------------------
 def _composition_free_module_morphism(psi, phi):
@@ -80,7 +82,7 @@ def LocFreeSheaf(stalk_dict = {}, res_dict = {}, base_ring = ZZ, domain_poset = 
     
     return sheaf
     
-class LocallyFreeSheafFinitePoset(SageObject):
+class LocallyFreeSheafFinitePoset(CategoryObject):
     """
       A Finite Locally Free Sheaf of Modules over a Commutative Ring on a Finite Poset.
       
@@ -292,7 +294,7 @@ class LocallyFreeSheafFinitePoset(SageObject):
                 target_res[(a, b)] = 0
                 continue
             target_res = self._res_dict[(inverse(a), inverse(b))]
-        return LocallyFreeSheafFinitePoset(target_stalks, target_res, base_ring = self._base_ring, domain_poset = target_poset)
+        return LocFreeSheafPoset(target_stalks, target_res, base_ring = self._base_ring, domain_poset = target_poset)
     
     def restrict_to(self, open_set):
         """
@@ -351,13 +353,29 @@ class LocallyFreeSheafFinitePoset(SageObject):
             g0_res[tuple(relation)] = block_matrix(rows, subdivide=False)    
         return LocallyFreeSheafFinitePoset(g0_stalks, g0_res, self._base_ring, self._domain_poset)  
         
-        
+    def _direct_sum(self, other):
+        pass
+    
+    def __add__(self, other):
+        return self._direct_sum(other)
+    
+    def __radd__(self, other):
+        return other._direct_sum(self)
+    
+    def dualizing_sheaf(self, degree):
+        pass
+    
+    def dualizing_complex(self, degree):
+        pass
+            
     def _latex_(self):
         return r'\mbox{' + str(self) + r'}'
     
     def _repr_(self):
         return "Locally Free Sheaf of Modules over {} on {}".format(self._base_ring, self._domain_poset)
-        
+    
+    def _Hom_(self, other):
+        return LocFreeSheafHomSet(self, other) 
         
         
         
