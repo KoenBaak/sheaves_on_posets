@@ -292,7 +292,7 @@ class LocallyFreeSheafFinitePoset(SageObject):
                 target_res[(a, b)] = 0
                 continue
             target_res = self._res_dict[(inverse(a), inverse(b))]
-        return LocFreeSheafPoset(target_stalks, target_res, base_ring = self._base_ring, domain_poset = target_poset)
+        return LocallyFreeSheafFinitePoset(target_stalks, target_res, base_ring = self._base_ring, domain_poset = target_poset)
     
     def restrict_to(self, open_set):
         """
