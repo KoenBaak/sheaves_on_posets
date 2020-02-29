@@ -1,10 +1,17 @@
 from sage.categories.morphism import Morphism
+from sage.categories.homset import Hom
 
 class LocFreeSheafMorphism(Morphism):
     
     def __init__(self, parent, component_dict):
         Morphism.__init__(self, parent)
         self._components = component_dict
+    
+    def component(self, point):
+        domain = self.domain().stalk(point)
+        codomain = self.codomain().stalk(point)
+        hom = Hom(domain, codomain)
+        return hom(self._components[point])
     
     def _latex_(self):
         pass

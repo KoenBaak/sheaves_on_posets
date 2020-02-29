@@ -1,5 +1,7 @@
 from sage.categories.homset import Homset
 
+from .sheaf_morphism import LocFreeSheafMorphism
+
 class LocFreeSheafHomset(Homset):
     
     Element = LocFreeSheafMorphism
