@@ -12,5 +12,5 @@ class LocFreeSheafHomset(Homset):
     def _latex_(self):
         pass
     
-    def _element_constructor_(self, component_dict):
+    def __call__(self, component_dict):
         return self.element_class(self, component_dict)

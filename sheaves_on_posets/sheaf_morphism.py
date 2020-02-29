@@ -38,5 +38,5 @@ class LocFreeSheafMorphism(SageObject):
     
     __nonzero__ = __bool__
     
-    def _call_(self, point):
+    def __call__(self, point):
         return self.component(point)
