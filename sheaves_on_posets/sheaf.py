@@ -272,8 +272,8 @@ class LocallyFreeSheafFinitePoset(SageObject):
         """
         
         # check if inlcusion_map is indeed an embedding 
-        image = [inclusion_map(x) for x in inclusion_map.codomain().list()]
-        if any(x not in image for x in self._domain_poset.order_filter(image)):
+        image = [inclusion_map(x) for x in self._domain_poset.list()]
+        if any(x not in image for x in inclusion_map.codomain().order_filter(image)):
             raise ValueError("The given inclusion map is not an embedding.")
         
         inverse = dict()
