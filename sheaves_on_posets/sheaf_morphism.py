@@ -25,3 +25,7 @@ class LocFreeSheafMorphism(Morphism):
     def __bool__(self):
         return True
     
+    __nonzero__ = __bool__
+    
+    def _call_(self, point):
+        return self.component(point)
