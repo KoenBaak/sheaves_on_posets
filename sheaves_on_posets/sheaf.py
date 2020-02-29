@@ -294,7 +294,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                 target_res[(a, b)] = 0
                 continue
             target_res = self._res_dict[(inverse(a), inverse(b))]
-        return LocFreeSheafPoset(target_stalks, target_res, base_ring = self._base_ring, domain_poset = target_poset)
+        return LocallyFreeSheafFinitePoset(target_stalks, target_res, base_ring = self._base_ring, domain_poset = target_poset)
     
     def restrict_to(self, open_set):
         """
@@ -375,6 +375,8 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         return "Locally Free Sheaf of Modules over {} on {}".format(self._base_ring, self._domain_poset)
     
     def _Hom_(self, other):
+        if not (other._domain_poset == self._domain_poset and other._base_ring == self._base_ring):
+            raise ValueError("Sheaves have different domain posets or different base rings.")
         return LocFreeSheafHomSet(self, other) 
         
         

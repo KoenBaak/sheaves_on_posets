@@ -19,6 +19,9 @@ class LocFreeSheafMorphism(Morphism):
     def _repr_(self):
         pass
     
+    def is_injective(self):
+        return all(component.right_kernel().rank() == 0 for component in self._components)
+    
     def __bool__(self):
         return True
     
