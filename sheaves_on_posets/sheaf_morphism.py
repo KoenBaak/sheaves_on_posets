@@ -1,11 +1,22 @@
-from sage.categories.morphism import Morphism
+#from sage.categories.morphism import Morphism
 from sage.categories.homset import Hom
+from sage.structure.sage_object import SageObject
 
-class LocFreeSheafMorphism(Morphism):
+class LocFreeSheafMorphism(SageObject):
     
     def __init__(self, parent, component_dict):
-        Morphism.__init__(self, parent)
+        #Morphism.__init__(self, parent)
         self._components = component_dict
+        self._parent = parent
+        
+    def domain(self):
+        return self._parent.domain()
+    
+    def codomain(self):
+        return self._parent.codomain()
+    
+    def category(self):
+        return self._parent.category()
     
     def component(self, point):
         domain = self.domain().stalk(point)
