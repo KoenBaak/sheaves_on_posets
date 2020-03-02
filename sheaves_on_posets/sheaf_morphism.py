@@ -1,9 +1,9 @@
 
-from sage.categories.morphism import Morphism
+from sage.structure.element import Element
 
-class LocFreeSheafMorphism(Morphism):
+class LocFreeSheafMorphism(Element):
     
     def __init__(self, parent, component_dict):
-        Morphism.__init__(self, parent)
+        Element.__init__(self, parent)
         self._components = component_dict
         print('in morphism init')
