@@ -351,7 +351,16 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                         blocks.append(Matrix(m, self._stalk_dict[x]))
                 rows.append(blocks)    
             g0_res[tuple(relation)] = block_matrix(rows, subdivide=False)    
-        return LocallyFreeSheafFinitePoset(g0_stalks, g0_res, self._base_ring, self._domain_poset)  
+        G0 = LocallyFreeSheafFinitePoset(g0_stalks, g0_res, self._base_ring, self._domain_poset)
+        hom = Hom(self, G0)
+        eps_dict = dict()
+        for p in self._domain_poset.list():
+            rows = []
+            for x in sorted(self._domain_poset.order_filter([p])):
+                rows.append([self.restriction(p, x).matrix()])
+            eps_dict[p] = block_matrix(rows, subdivide=False)
+        epsilon = hom(eps_dict)
+        return epsilon, G0  
         
     def _direct_sum(self, other):
         pass
@@ -375,7 +384,6 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         return "Locally Free Sheaf of Modules over {} on {}".format(self._base_ring, self._domain_poset)
     
     def _Hom_(self, other, category=None):
-        print('in _Hom_')
         if not (other._domain_poset == self._domain_poset and other._base_ring == self._base_ring):
             raise ValueError("Sheaves have different domain posets or different base rings.")
         return LocFreeSheafHomset(self, other) 

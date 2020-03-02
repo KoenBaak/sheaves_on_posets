@@ -2,7 +2,7 @@
 from sage.structure.element import Element
 
 from sage.matrix.special import identity_matrix
-
+from sage.matrix.constructor import Matrix, matrix
 
 class LocFreeSheafMorphism(Element):
     
@@ -20,6 +20,13 @@ class LocFreeSheafMorphism(Element):
     def codomain(self):
         return self._parent.codomain()
     
+    def component_matrix(self, point):
+        if self._components[point] == 0:
+            return matrix(self.base_ring, self.domain()._stalk_dict[point], self.domain()._stalk_dict[point])
+        if self._components[point] == 1:
+            return identity_matrix(self._base_ring, self.domain()._stalk_dict[point])
+        return matrix(self._components[point])
+            
     def component(self, point):
         h = Hom(self.domain().stalk(point), self.codomain().stalk(point))
         if self._components[point] == 0:
@@ -29,6 +36,9 @@ class LocFreeSheafMorphism(Element):
         else:
             phi = h(self._components[point])    
         phi._name = "Component of {} at {}".format(self._name, point)
+    
+    def is_injective(self):
+        return all(self.component_matrix(i).right_kernel().rank() == 0 for i in self._domain_poset.list())
         
     def __getitem__(self, i):
         return self.component(i)
