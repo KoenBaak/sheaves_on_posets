@@ -20,6 +20,12 @@ class LocFreeSheafHomset(Parent):
     def codomain(self):
         return self._codomain
     
+    def zero(self):
+        zero = dict()
+        for i in self._domain_poset.list():
+            zero[i] = matrix(self._base_ring, self._domain._stalk_dict[i], self._codomain._stalk_dict[i])
+        return self(zero)
+    
     def __call__(self, component_dict, name = "sheaf morphism"):
         mor = self.element_class(self, component_dict, name)
         for r in self._domain_poset.cover_relations():
