@@ -362,8 +362,8 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                 else:
                     rows.append([self.restriction(p, x).matrix()])
             eps_dict[p] = block_matrix(rows, subdivide=False)
-        epsilon = hom(eps_dict)
-        return epsilon, G0  
+        #epsilon = hom(eps_dict)
+        return eps_dict, G0  
         
     def _direct_sum(self, other):
         pass
