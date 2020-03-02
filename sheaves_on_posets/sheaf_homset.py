@@ -29,7 +29,7 @@ class LocFreeSheafHomset(Parent):
     def __call__(self, component_dict, name = "sheaf morphism"):
         mor = self.element_class(self, component_dict, name)
         for r in self._domain_poset.cover_relations():
-            if not self._codomain.restriction(r[0], r[1]).matrix() * mor.component(r[0]).matrix() == mor.component(r[1]).matrix() * self._domain.restriction(r[0], r[1]):
+            if not self._codomain.restriction(r[0], r[1]).matrix() * mor.component_matrix(r[0]) == mor.component_matrix(r[1]) * self._domain.restriction(r[0], r[1]):
                 raise ValueError("input does not define a morphism of sheaves")
         return mor
     

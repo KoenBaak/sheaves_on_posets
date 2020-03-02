@@ -37,7 +37,8 @@ class LocFreeSheafMorphism(Element):
         else:
             phi = h(self._components[point])    
         phi._name = "Component of {} at {}".format(self._name, point)
-    
+        return phi
+        
     def is_injective(self):
         return all(self.component_matrix(i).right_kernel().rank() == 0 for i in self._domain_poset.list())
         
