@@ -23,7 +23,7 @@ class LocFreeSheafMorphism(Element):
     
     def component_matrix(self, point):
         if self._components[point] == 0:
-            return matrix(self.base_ring, self.domain()._stalk_dict[point], self.codomain()._stalk_dict[point])
+            return matrix(self._base_ring, self.domain()._stalk_dict[point], self.codomain()._stalk_dict[point])
         if self._components[point] == 1:
             return identity_matrix(self._base_ring, self.domain()._stalk_dict[point])
         return matrix(self._components[point])
