@@ -374,7 +374,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
     def _repr_(self):
         return "Locally Free Sheaf of Modules over {} on {}".format(self._base_ring, self._domain_poset)
     
-    def _Hom_(self, other):
+    def _Hom_(self, other, category=None):
         print('in _Hom_')
         if not (other._domain_poset == self._domain_poset and other._base_ring == self._base_ring):
             raise ValueError("Sheaves have different domain posets or different base rings.")
