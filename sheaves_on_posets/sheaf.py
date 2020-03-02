@@ -378,7 +378,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         print('in _Hom_')
         if not (other._domain_poset == self._domain_poset and other._base_ring == self._base_ring):
             raise ValueError("Sheaves have different domain posets or different base rings.")
-        return LocFreeSheafHomSet(self, other) 
+        return LocFreeSheafHomset(self, other) 
         
         
         
