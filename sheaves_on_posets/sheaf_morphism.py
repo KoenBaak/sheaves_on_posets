@@ -1,4 +1,4 @@
-#from sage.categories.morphism import Morphism
+
 from sage.categories.homset import Hom
 from sage.structure.sage_object import SageObject
 
