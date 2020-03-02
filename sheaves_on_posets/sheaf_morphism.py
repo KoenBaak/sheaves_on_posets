@@ -3,6 +3,7 @@ from sage.structure.element import Element
 
 from sage.matrix.special import identity_matrix
 from sage.matrix.constructor import Matrix, matrix
+from sage.categories.homset import Hom
 
 class LocFreeSheafMorphism(Element):
     
