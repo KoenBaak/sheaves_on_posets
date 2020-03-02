@@ -357,7 +357,10 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         for p in self._domain_poset.list():
             rows = []
             for x in sorted(self._domain_poset.order_filter([p])):
-                rows.append([self.restriction(p, x).matrix()])
+                if x == p:
+                    rows.append([identity_matrix(self._base_ring, self._stalk_dict[p])])
+                else:
+                    rows.append([self.restriction(p, x).matrix()])
             eps_dict[p] = block_matrix(rows, subdivide=False)
         epsilon = hom(eps_dict)
         return epsilon, G0  
