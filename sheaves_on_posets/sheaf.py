@@ -238,7 +238,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
             return ChainComplex([rank, differential], base_ring=self._base_ring)
         
         # Other cases
-        end_base = [[x] for x in self._domain_poset.list()]
+        end_base = sorted([[x] for x in self._domain_poset.list()])
         diff_dict = dict()
         for p in range(1, self._domain_poset.height()):
             start_base = end_base
