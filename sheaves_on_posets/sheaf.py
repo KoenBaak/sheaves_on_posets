@@ -221,7 +221,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                             if index != len(to_chain) - 1:
                                 blocks.append(sign*identity_matrix(self._base_ring, m))
                             else:
-                                mat = self.restriction(from_chain[-1], point)
+                                mat = self.restriction(from_chain[-1], point).matrix()
                                 blocks.append(sign*mat)
                             break 
                 else:
