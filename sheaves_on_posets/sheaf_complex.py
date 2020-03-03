@@ -60,9 +60,9 @@ def dualizing_complex(poset, base_ring=ZZ, rank=1):
     data = [bound_below]
     for p in range(0, dim):
         differential = 0
-        data.append(_dualizing_sheaf(poset, p, base_ring, rank))
+        data.append(_dualizing_sheaf(poset, -1*p, base_ring, rank))
         data.append(differential)
-    data.append(_dualizing_sheaf(poset, dim, base_ring, rank))
+    data.append(_dualizing_sheaf(poset, -1*dim, base_ring, rank))
     return LocFreeSheafComplex(data)
 
 
