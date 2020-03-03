@@ -208,6 +208,28 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         """
         
         rows = []
+        for to_chain in end_base:
+            blocks = []
+            m = self._stalk_dict[to_chain[-1]]
+            for from_chain in start_base:
+                n = self._stalk_dict[from_chain[-1]]
+                if all(x in to_chain for x in from_chain):
+                    for point in to_chain:
+                        if point not from_chain:
+                            index = to_chain.index(point)
+                            sign = 1 if index % 2 == 0 else - 1
+                            if index != len(from_chain) - 1:
+                                blocks.append(sign*identity_matrix(self._base_ring, m))
+                            else:
+                                mat = self.restriction(from_chain[-1], point)
+                                blocks.append(sign*mat)
+                            break 
+                else:
+                    blocks.append(Matrix(self._base_ring, m, n))
+            rows.append(blocks)
+        return block_matrix(rows, subdivide=True)
+        '''
+        rows = []
         for c in end_base:
             blocks = []
             m = self._stalk_dict[c[-1]]
@@ -226,7 +248,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                     blocks.append(Matrix(self._base_ring, m , n))
             rows.append(blocks)
         return block_matrix(rows, subdivide=False) 
-    
+        '''
     def godement_cochain_complex(self):
         """
           Construct the Godement cochain complex of ``self``. 
