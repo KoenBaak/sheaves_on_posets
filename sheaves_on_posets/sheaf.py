@@ -352,6 +352,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                 rows.append(blocks)    
             g0_res[tuple(relation)] = block_matrix(rows, subdivide=False)    
         G0 = LocallyFreeSheafFinitePoset(g0_stalks, g0_res, self._base_ring, self._domain_poset)
+        hom = Hom(self, G0)
         eps_dict = dict()
         for p in self._domain_poset.list():
             rows = []
@@ -361,7 +362,8 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                 else:
                     rows.append([self.restriction(p, x).matrix()])
             eps_dict[p] = block_matrix(rows, subdivide=False)
-        return Hom(self, G0)(eps_dict), G0  
+        epsilon = hom(eps_dict)
+        return epsilon, G0  
         
     def _direct_sum(self, other):
         pass
