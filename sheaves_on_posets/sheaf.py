@@ -220,7 +220,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                             blocks.append(sign*identity_matrix(self._base_ring, m))
                             break
                     else:
-                        sign = 1 if len(c) % 2 == 0 else -1
+                        sign = 1 if len(c) - 1 % 2 == 0 else -1
                         blocks.append(sign*self.restriction(e[-1], c[-1]).matrix())
                 else:
                     blocks.append(Matrix(self._base_ring, m , n))
