@@ -33,8 +33,8 @@ class LocFreeSheafHomset(Parent):
             print('component {} : {}'.format(r[0], mor.component_matrix(r[0])))
             print("domain restriction {} : {}".format(r, self._codomain.restriction(r[0], r[1]).matrix()))
             print('component {} : {}'.format(r[1], mor.component_matrix(r[1])))
-            if not self._codomain.restriction(r[0], r[1]).matrix() * mor.component_matrix(r[0]) == mor.component_matrix(r[1]) * self._domain.restriction(r[0], r[1]):
-                print("fail")
+            #if not self._codomain.restriction(r[0], r[1]).matrix() * mor.component_matrix(r[0]) == mor.component_matrix(r[1]) * self._domain.restriction(r[0], r[1]):
+             #   print("fail")
                 #raise ValueError("input does not define a morphism of sheaves")
         return mor
     
