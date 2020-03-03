@@ -218,7 +218,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                         if point not in from_chain:
                             index = to_chain.index(point)
                             sign = 1 if index % 2 == 0 else - 1
-                            if index != len(from_chain) - 1:
+                            if index != len(to_chain) - 1:
                                 blocks.append(sign*identity_matrix(self._base_ring, m))
                             else:
                                 mat = self.restriction(from_chain[-1], point)
