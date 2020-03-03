@@ -400,15 +400,3 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         return LocFreeSheafHomset(self, other) 
         
         
-        
-  
-        
-        
-        
-        
-    
-    
-    
-    
-    
-    
