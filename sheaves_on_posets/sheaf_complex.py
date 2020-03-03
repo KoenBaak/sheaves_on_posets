@@ -12,6 +12,8 @@ class LocFreeSheafComplex(CategoryObject):
         self._base_ring = data[1]._base_ring
         self._domain_poset = data[1]._domain_poset
         self._min = data[0]
+        self._sheaves = dict()
+        self._diff = dict()
         for c, v in enumerate(data[1:]):
             if c%2 == 0:
                 self._sheaves[self._min + c//2] = v
@@ -32,7 +34,7 @@ class LocFreeSheafComplex(CategoryObject):
         return self._diff[place]
     
     def _repr_(self):
-        return "(Cochain) Complex of Locally Free Sheaves of Modules over {} on {} with at least {} nonzero terms"
+        return "(Cochain) Complex of Locally Free Sheaves of Modules over {} on {} with at least {} nonzero terms".format(self._base_ring, self._domain_poset, len(self._sheaves))
         
 
 def _dualizing_sheaf(poset, degree, base_ring, rank):
