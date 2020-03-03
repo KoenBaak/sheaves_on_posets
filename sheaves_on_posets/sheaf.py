@@ -387,12 +387,6 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
     
     def __radd__(self, other):
         return other._direct_sum(self)
-    
-    def dualizing_sheaf(self, degree):
-        pass
-    
-    def dualizing_complex(self, rank=1):
-        pass
             
     def _latex_(self):
         return r'\mbox{' + str(self) + r'}'
