@@ -215,7 +215,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                 n = self._stalk_dict[from_chain[-1]]
                 if all(x in to_chain for x in from_chain):
                     for point in to_chain:
-                        if point not from_chain:
+                        if point not in from_chain:
                             index = to_chain.index(point)
                             sign = 1 if index % 2 == 0 else - 1
                             if index != len(from_chain) - 1:
