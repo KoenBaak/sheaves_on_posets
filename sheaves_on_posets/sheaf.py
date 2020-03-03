@@ -245,6 +245,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
             end_base = list(filter(lambda c: len(c)==p+1, self._domain_poset.chains()))
             end_base = sorted([sorted(c) for c in end_base])
             diff_dict[p-1] = self._godement_complex_differential(start_base, end_base)
+        print(diff_dict)
         return ChainComplex(diff_dict, base_ring = self._base_ring)
     
     def cohomology(self, degree=None):
