@@ -2,6 +2,7 @@
 from sage.structure.category_object import CategoryObject
 from sage.combinat.posets.posets import Poset
 from sage.categories.homset import Hom
+from sage.rings.integer_ring import ZZ
 
 from .sheaf import LocallyFreeSheafFinitePoset
 
