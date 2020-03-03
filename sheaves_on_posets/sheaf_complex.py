@@ -39,7 +39,7 @@ class LocFreeSheafComplex(CategoryObject):
 
 def _dualizing_sheaf(poset, degree, base_ring, rank):
     p = degree*-1
-    chains = sorted(filter(lambda chain: len(chain)==p+!, poset.chains()))
+    chains = sorted(filter(lambda chain: len(chain)==p+1, poset.chains()))
     singleton = Poset({0:[]}, {})
     sheaf = LocallyFreeSheafFinitePoset({0:rank}, {}, base_ring = base_ring, domain_poset = singleton)
     result = None
