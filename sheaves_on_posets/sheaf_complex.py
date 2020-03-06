@@ -4,6 +4,9 @@ from sage.combinat.posets.posets import Poset
 from sage.categories.homset import Hom
 from sage.rings.integer_ring import ZZ
 
+from sage.matrix.special import identity_matrix
+from sage.matrix.special import block_matrix
+from sage.matrix.constructor import matrix
 from .sheaf import LocallyFreeSheafFinitePoset
 
 class LocFreeSheafComplex(CategoryObject):
@@ -34,10 +37,10 @@ class LocFreeSheafComplex(CategoryObject):
         return self._sheaves[place]
     
     def differential(self, place):
+        hom = Hom(self.sheaf_at(place), self.sheaf_at(place + 1))
         if place not in self._diff:
-            hom = Hom(self.sheaf_at(place), self.sheaf_at(place + 1))
             return hom.zero()
-        return self._diff[place]
+        return hom(self._diff[place])
     
     def _repr_(self):
         return "(Cochain) Complex of Locally Free Sheaves of Modules over {} on {} with at least {} nonzero terms".format(self._base_ring, self._domain_poset, len(self._sheaves))
@@ -64,14 +67,34 @@ def dualizing_complex(poset, base_ring=ZZ, rank=1):
     dim = poset.height() - 1
     bound_below = -1*dim
     data = [bound_below]
-    for p in range(0, dim):
-        differential = 0
-        data.append(_dualizing_sheaf(poset, -1*p, base_ring, rank))
+    end_base = sorted(poset.maximal_chains())
+    for p in range(-1*dim, 0):
+        start_base = end_base
+        end_base = sorted(filter(lambda c: len(c) == -1*p, poset.chains()))
+        differential = dict()
+        for x in poset.list():
+            point_start_base = filter(lambda c: poset.is_less(x, c[-1]), start_base)
+            point_end_base = filter(lambda c: poset.is_less(x, c[-1]), end_base)
+            rows = []
+            for end_chain in point_end_base:
+                blocks = []
+                for start_chain in point_start_base:
+                    if all(p in start_chain for p in end_chain):
+                        for y in start_chain:
+                            if y not in end_chain and y != start_chain[-1]:
+                                sign = 1 if start_chain.index(y)%2 == 0 else -1
+                                blocks.append(identity_matrix(base_ring, rank))
+                                break
+                        else:
+                            blocks.append(matrix(base_ring, rank, rank))    
+                    else:
+                        blocks.append(matrix(base_ring, rank, rank))        
+                rows.append(blocks)
+            differential[x] = block_matrix(rows, subdivide = False)    
+        data.append(_dualizing_sheaf(poset, p, base_ring, rank))
         data.append(differential)
-    data.append(_dualizing_sheaf(poset, -1*dim, base_ring, rank))
+    data.append(_dualizing_sheaf(poset, 0, base_ring, rank))
     return LocFreeSheafComplex(data)
-
-
 
 
 

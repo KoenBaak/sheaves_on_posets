@@ -312,9 +312,9 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         if self._domain_poset.cardinality() == 1:
             point = self._domain_poset.list()[0]
             image = poset_map(point)
-            supported = poset_map.codomain().order_filter([image])
+            supported = poset_map.codomain().order_ideal([image])
             stalks = {x:self._stalk_dict[point] if x in supported else 0 for x in poset_map.codomain().list()}
-            restrictions = {tuple(r):1 if r[0] in supported else 0 for r in poset_map.codomain().cover_relations()}
+            restrictions = {tuple(r):1 if r[1] in supported else 0 for r in poset_map.codomain().cover_relations()}
             return LocallyFreeSheafFinitePoset(stalks, restrictions, self._base_ring, poset_map.codomain())
         raise NotImplementedError("For now only sheaves on a singleton can be pushed forward")
     
