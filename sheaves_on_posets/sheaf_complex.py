@@ -42,6 +42,10 @@ class LocFreeSheafComplex(CategoryObject):
             return hom.zero()
         return hom(self._diff[place])
     
+    def _check_zero_composition(self):
+        for place in range(self.below_bound(), self.above_bound()):
+            pass
+    
     def _repr_(self):
         return "(Cochain) Complex of Locally Free Sheaves of Modules over {} on {} with at least {} nonzero terms".format(self._base_ring, self._domain_poset, len(self._sheaves))
         
@@ -73,8 +77,8 @@ def dualizing_complex(poset, base_ring=ZZ, rank=1):
         end_base = sorted(filter(lambda c: len(c) == -1*p, poset.chains()))
         differential = dict()
         for x in poset.list():
-            point_start_base = filter(lambda c: poset.is_less(x, c[-1]), start_base)
-            point_end_base = filter(lambda c: poset.is_less(x, c[-1]), end_base)
+            point_start_base = filter(lambda c: poset.is_less_than(x, c[-1]), start_base)
+            point_end_base = filter(lambda c: poset.is_less_than(x, c[-1]), end_base)
             rows = []
             for end_chain in point_end_base:
                 blocks = []
