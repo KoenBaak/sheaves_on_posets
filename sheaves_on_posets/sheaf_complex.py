@@ -19,6 +19,12 @@ class LocFreeSheafComplex(CategoryObject):
                 self._sheaves[self._min + c//2] = v
             else:
                 self._diff[self._min + (c-1)//2] = v
+                  
+    def below_bound(self):
+        return self._min
+    
+    def above_bound(self):
+        max(self._sheaves)
     
     def sheaf_at(self, place):
         if place not in self._sheaves:

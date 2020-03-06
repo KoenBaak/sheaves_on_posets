@@ -25,6 +25,14 @@ def _composition_free_module_morphism(psi, phi):
     if phi.is_zero() or psi.is_zero():
         return hom.zero()
     return hom(psi.matrix() * phi.matrix())
+
+def ConstantSheaf(domain_poset, base_ring = ZZ, rank=1):
+    stalk_dict = {x:rank for x in domain_poset.list()}
+    res_dict = {tuple(r):1 for r in domain_poset.cover_relations()}
+    return LocallyFreeSheafFinitePoset(stalk_dict, res_dict, base_ring = base_ring, domain_poset = domain_poset)
+
+def ZeroSheaf(domain_poset, base_ring = ZZ):
+    return ConstantSheaf(domain_poset, base_ring, rank = 0)
     
 def LocFreeSheaf(stalk_dict = {}, res_dict = {}, base_ring = ZZ, domain_poset = None):
     '''
@@ -227,28 +235,9 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
                 else:
                     blocks.append(Matrix(self._base_ring, m, n))
             rows.append(blocks)
-        return block_matrix(rows, subdivide=True)
-        '''
-        rows = []
-        for c in end_base:
-            blocks = []
-            m = self._stalk_dict[c[-1]]
-            for e in start_base:
-                n = self._stalk_dict[e[-1]]
-                if all(x in c for x in e):
-                    for y in c[:-1]:
-                        if y not in e:
-                            sign = 1 if c.index(y) % 2 == 0 else -1
-                            blocks.append(sign*identity_matrix(self._base_ring, m))
-                            break
-                    else:
-                        sign = 1 if len(c) - 1 % 2 == 0 else -1
-                        blocks.append(sign*self.restriction(e[-1], c[-1]).matrix())
-                else:
-                    blocks.append(Matrix(self._base_ring, m , n))
-            rows.append(blocks)
-        return block_matrix(rows, subdivide=False) 
-        '''
+        return block_matrix(rows, subdivide=False)
+        
+    
     def godement_cochain_complex(self):
         """
           Construct the Godement cochain complex of ``self``. 
