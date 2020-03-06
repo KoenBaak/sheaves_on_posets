@@ -87,7 +87,7 @@ def dualizing_complex(poset, base_ring=ZZ, rank=1):
                         for y in start_chain:
                             if y not in end_chain and y != start_chain[-1]:
                                 sign = 1 if start_chain.index(y)%2 == 0 else -1
-                                blocks.append(identity_matrix(base_ring, rank))
+                                blocks.append(sign*identity_matrix(base_ring, rank))
                                 break
                         else:
                             blocks.append(matrix(base_ring, rank, rank))    

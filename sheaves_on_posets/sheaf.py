@@ -391,7 +391,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         if not (self._base_ring == other._base_ring and self._domain_poset == other._domain_poset):
             raise TypeError("Sheaves are not defined on same poset or not defined over same ring")
         direct_sum_stalks = {x:self._stalk_dict[x] + other._stalk_dict[x] for x in self._domain_poset.list()}
-        direct_sum_res = {tuple(r):block_diagonal_matrix(self.restriction(r[0], r[1]).matrix(), other.restriction(r[0], r[1]).matrix()) for r in self._domain_poset.cover_relations()}
+        direct_sum_res = {tuple(r):block_diagonal_matrix(self.restriction(r[0], r[1]).matrix(), other.restriction(r[0], r[1]).matrix(), subdivide = False) for r in self._domain_poset.cover_relations()}
         return LocallyFreeSheafFinitePoset(direct_sum_stalks, direct_sum_res, self._base_ring, self._domain_poset)
     
     def __add__(self, other):

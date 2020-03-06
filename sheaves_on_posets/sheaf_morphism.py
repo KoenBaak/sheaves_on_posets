@@ -41,6 +41,9 @@ class LocFreeSheafMorphism(Element):
         
     def is_injective(self):
         return all(self.component_matrix(i).right_kernel().rank() == 0 for i in self._domain_poset.list())
+    
+    def is_zero(self):
+        return all(self.component_matrix(x).is_zero() for x in self._domain_poset.list())
         
     def __getitem__(self, i):
         return self.component(i)
