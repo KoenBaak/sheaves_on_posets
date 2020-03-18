@@ -245,7 +245,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         # The case that the domain_space has dimension 0
         if self._domain_poset.height() == 1:
             rank = sum(self._stalk_dict[key] for key in self._stalk_dict)
-            differential = matrix(self._base_ring, 0, n)
+            differential = matrix(self._base_ring, 0, rank)
             return ChainComplex([rank, differential], base_ring=self._base_ring)
         
         # Other cases
@@ -256,7 +256,6 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
             end_base = list(filter(lambda c: len(c)==p+1, self._domain_poset.chains()))
             end_base = sorted(end_base)
             diff_dict[p-1] = self._godement_complex_differential(start_base, end_base)
-            print("start_base: {}\n end_base: {}\n diff:\n{}".format(start_base, end_base, diff_dict[p-1]))
         return ChainComplex(diff_dict, base_ring = self._base_ring)
     
     def cohomology(self, degree=None):
@@ -410,5 +409,6 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         if not (other._domain_poset == self._domain_poset and other._base_ring == self._base_ring):
             raise ValueError("Sheaves have different domain posets or different base rings.")
         return LocFreeSheafHomset(self, other) 
+    
         
         
