@@ -23,8 +23,8 @@ class LocFreeSheafComplex(CategoryObject):
                 self._sheaves[self._min + c//2] = v
             else:
                 self._diff[self._min + (c-1)//2] = v
-        #if not self._check_zero_composition():
-        #    raise ValueError("Not all compositions of differentials are zero")
+        if not self._check_zero_composition():
+            raise ValueError("Not all compositions of differentials are zero")
                              
     def below_bound(self):
         return self._min
@@ -82,16 +82,16 @@ def dualizing_complex(poset, base_ring=ZZ, rank=1):
     dim = poset.height() - 1
     bound_below = -1*dim
     data = [bound_below]
-    end_base = sorted(poset.maximal_chains())
+    end_base = sorted(filter(lambda c: len(c) == dim + 1, poset.maximal_chains()))
     for p in range(-1*dim, 0):
         start_base = end_base
         end_base = sorted(filter(lambda c: len(c) == -1*p, poset.chains()))
-        print("making differential from degree {}\n start: {}\n end:{}".format(p, start_base, end_base))
+        #print("making differential from degree {}\n start: {}\n end:{}".format(p, start_base, end_base))
         differential = dict()
         for x in poset.list():
             point_start_base = filter(lambda c: poset.is_lequal(x, c[-1]), start_base)
             point_end_base = filter(lambda c: poset.is_lequal(x, c[-1]), end_base)
-            print("------for point {}: \n---------start:{}\n---------end:{}".format(x, point_start_base, point_end_base))
+            #print("------for point {}: \n---------start:{}\n---------end:{}".format(x, point_start_base, point_end_base))
             rows = []
             for end_chain in point_end_base:
                 blocks = []
