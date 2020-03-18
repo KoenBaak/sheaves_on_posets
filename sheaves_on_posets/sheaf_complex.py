@@ -44,7 +44,7 @@ class LocFreeSheafComplex(CategoryObject):
         return hom(self._diff[place], name="differential of {} at degree {}".format(self._name, place))
     
     def _check_zero_composition(self):
-        next_diff = self.differential(self.below_bound)
+        next_diff = self.differential(self.below_bound())
         for place in range(self.below_bound(), self.above_bound()):
             print(place)
             diff = next_diff
