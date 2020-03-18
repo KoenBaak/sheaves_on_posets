@@ -11,7 +11,8 @@ from .sheaf import LocallyFreeSheafFinitePoset
 
 class LocFreeSheafComplex(CategoryObject):
     
-    def __init__(self, data):
+    def __init__(self, data, name="complex of sheaves"):
+        self._name = name
         self._base_ring = data[1]._base_ring
         self._domain_poset = data[1]._domain_poset
         self._min = data[0]
@@ -40,22 +41,23 @@ class LocFreeSheafComplex(CategoryObject):
         hom = Hom(self.sheaf_at(place), self.sheaf_at(place + 1))
         if place not in self._diff:
             return hom.zero()
-        return hom(self._diff[place])
+        return hom(self._diff[place], name="differential of {} at degree {}".format(self._name, place))
     
     def _check_zero_composition(self):
         next_diff = self.differential(self.below_bound)
         for place in range(self.below_bound(), self.above_bound()):
-            diff = next_diff
-            next_diff = self.differential(place + 1)
-            if not diff.compose(next_diff).is_zero():
-                return False
+            print(place)
+            #diff = next_diff
+            #next_diff = self.differential(place + 1)
+            #if not diff.compose(next_diff).is_zero():
+            #    return False
         return True
     
     def __getitem__(self, place):
         return self.sheaf_at(place)
     
     def _repr_(self):
-        return "(Cochain) Complex of Locally Free Sheaves of Modules over {} on {} with at least {} nonzero terms".format(self._base_ring, self._domain_poset, len(self._sheaves))
+        return "(Cochain) Complex of Locally Free Sheaves of Modules over {} on {} with at most {} nonzero terms".format(self._base_ring, self._domain_poset, len(self._sheaves))
         
 
 def _dualizing_sheaf(poset, degree, base_ring, rank):
@@ -106,7 +108,11 @@ def dualizing_complex(poset, base_ring=ZZ, rank=1):
         data.append(_dualizing_sheaf(poset, p, base_ring, rank))
         data.append(differential)
     data.append(_dualizing_sheaf(poset, 0, base_ring, rank))
-    return LocFreeSheafComplex(data)
+    if rank == 1:
+        name = "dualizing complex of ({}, {})".format(poset, base_ring)
+    else:
+        name = "dualizing complex of ({}, rank-{} free module over {})".format(poset, rank, base_ring)    
+    return LocFreeSheafComplex(data, name=name)
 
 
 
