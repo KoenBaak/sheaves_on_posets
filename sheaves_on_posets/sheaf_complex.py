@@ -43,8 +43,16 @@ class LocFreeSheafComplex(CategoryObject):
         return hom(self._diff[place])
     
     def _check_zero_composition(self):
+        next_diff = self.differential(self.below_bound)
         for place in range(self.below_bound(), self.above_bound()):
-            pass
+            diff = next_diff
+            next_diff = self.differential(place + 1)
+            if not diff.compose(next_diff).is_zero():
+                return False
+        return True
+    
+    def __getitem__(self, place):
+        return self.sheaf_at(place)
     
     def _repr_(self):
         return "(Cochain) Complex of Locally Free Sheaves of Modules over {} on {} with at least {} nonzero terms".format(self._base_ring, self._domain_poset, len(self._sheaves))

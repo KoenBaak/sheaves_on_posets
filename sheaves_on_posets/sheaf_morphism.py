@@ -44,6 +44,15 @@ class LocFreeSheafMorphism(Element):
     
     def is_zero(self):
         return all(self.component_matrix(x).is_zero() for x in self._domain_poset.list())
+    
+    def compose(self, other):
+        if not other.domain() == self.codomain():
+            raise ValueError("codomain and domain of maps to compose do not match")
+        result_map = dict()
+        for x in self._domain_poset.list():
+            result_map[x] = other.component_matrix(x) * self.component_matrix(x)
+        hom = Hom(self.domain(), other.codomain())
+        return hom(result_map)
         
     def __getitem__(self, i):
         return self.component(i)

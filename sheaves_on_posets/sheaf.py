@@ -254,7 +254,7 @@ class LocallyFreeSheafFinitePoset(CategoryObject):
         for p in range(1, self._domain_poset.height()):
             start_base = end_base
             end_base = list(filter(lambda c: len(c)==p+1, self._domain_poset.chains()))
-            end_base = sorted([sorted(c) for c in end_base])
+            end_base = sorted(end_base)
             diff_dict[p-1] = self._godement_complex_differential(start_base, end_base)
             print("start_base: {}\n end_base: {}\n diff:\n{}".format(start_base, end_base, diff_dict[p-1]))
         return ChainComplex(diff_dict, base_ring = self._base_ring)
