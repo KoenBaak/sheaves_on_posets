@@ -86,10 +86,12 @@ def dualizing_complex(poset, base_ring=ZZ, rank=1):
     for p in range(-1*dim, 0):
         start_base = end_base
         end_base = sorted(filter(lambda c: len(c) == -1*p, poset.chains()))
+        print("making differential from degree {}\n start: {}\n end:{}".format(p, start_base, end_base))
         differential = dict()
         for x in poset.list():
             point_start_base = filter(lambda c: poset.is_lequal(x, c[-1]), start_base)
             point_end_base = filter(lambda c: poset.is_lequal(x, c[-1]), end_base)
+            print("------for point {}: \n---------start:{}\n---------end:{}".format(x, point_start_base, point_end_base))
             rows = []
             for end_chain in point_end_base:
                 blocks = []
