@@ -23,7 +23,9 @@ class LocFreeSheafComplex(CategoryObject):
                 self._sheaves[self._min + c//2] = v
             else:
                 self._diff[self._min + (c-1)//2] = v
-                  
+        if not self._check_zero_composition():
+            raise ValueError("Not all compositions of differentials are zero")
+                             
     def below_bound(self):
         return self._min
     
