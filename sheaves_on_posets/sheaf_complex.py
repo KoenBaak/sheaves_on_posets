@@ -28,7 +28,7 @@ class LocFreeSheafComplex(CategoryObject):
         return self._min
     
     def above_bound(self):
-        max(self._sheaves)
+        return max(self._sheaves)
     
     def sheaf_at(self, place):
         if place not in self._sheaves:
@@ -47,10 +47,10 @@ class LocFreeSheafComplex(CategoryObject):
         next_diff = self.differential(self.below_bound)
         for place in range(self.below_bound(), self.above_bound()):
             print(place)
-            #diff = next_diff
-            #next_diff = self.differential(place + 1)
-            #if not diff.compose(next_diff).is_zero():
-            #    return False
+            diff = next_diff
+            next_diff = self.differential(place + 1)
+            if not diff.compose(next_diff).is_zero():
+                return False
         return True
     
     def __getitem__(self, place):
