@@ -1,5 +1,5 @@
 # Dockerfile for binder
-# Reference: https://mybinder.readthedocs.io/en/latest/dockerfile.html#preparing-your-dockerfile
+# Reference: https://mybinder.readthedocs.io/en/latest/tutorials/dockerfile.html#preparing-your-dockerfile
 
 FROM sagemath/sagemath:8.8
 
